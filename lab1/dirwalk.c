@@ -34,16 +34,13 @@ void scan_directory(const char *dir_path, int show_links, int show_dirs, int sho
     while ((entry = readdir(dir)) != NULL) {
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
-
         char full_path[PATH_MAX];
         snprintf(full_path, sizeof(full_path), "%s/%s", dir_path, entry->d_name);
-
         struct stat file_stat;
         if (lstat(full_path, &file_stat) == -1) {
             perror("lstat");
             continue;
         }
-
         int flag;
         if (S_ISLNK(file_stat.st_mode)) {
             flag = 0;
@@ -81,22 +78,17 @@ int main(int argc, char *argv[]) {
                 exit(EXIT_FAILURE);
         }
     }
-
     const char *start_dir = (optind < argc) ? argv[optind] : ".";
-
     scan_directory(start_dir, show_links, show_dirs, show_files, &array_entries, &entry_count);
-
     if (sort_output) {
         qsort(array_entries.entries, array_entries.size, sizeof(Map), compare_entries);
     }
-
     for (int i = 0; i < array_entries.size; i++) {
         printf("%s: %s\n", (array_entries.entries[i].flag == 0) ? "Symlink" :
                            (array_entries.entries[i].flag == 1) ? "File" : "Directory",
                            array_entries.entries[i].entry);
         free(array_entries.entries[i].entry);
     }
-
     free(array_entries.entries);
     return 0;
 }
