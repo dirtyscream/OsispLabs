@@ -1,0 +1,3 @@
+/home/morra/CLionProjects/Lab3/cmake-build-debug/CMakeFiles/Lab3.dir
+/home/morra/CLionProjects/Lab3/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/morra/CLionProjects/Lab3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
